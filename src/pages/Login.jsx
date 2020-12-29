@@ -49,6 +49,7 @@ const Login = () => {
         }
 
         saveSideInfo(name, res);
+        sessionStorage.setItem("activeKey", "home");
         history.push("/main");
     }
 

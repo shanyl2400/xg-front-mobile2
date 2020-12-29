@@ -9,7 +9,7 @@ const Details = () => {
     let history = useHistory();
 
     const handleGoBack = e => {
-        console.log(id);
+        sessionStorage.setItem("activeKey", "list");
         history.goBack();
     }
     useEffect(() => {
@@ -20,14 +20,12 @@ const Details = () => {
             let res = await getStudentByIdAPI(id);
             console.log(res);
             if (res.err_msg != "success") {
-                console.log(res.err_msg);
                 history.goBack();
             }
             setStudentInfo(res.student);
         }
         fetchData();
     }, []);
-    console.log(studentInfo)
     return (
         <>
             <Panel

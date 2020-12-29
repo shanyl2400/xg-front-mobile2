@@ -7,20 +7,22 @@ import User from './User';
 const TabIcon = Icon.createFromIconfont('//at.alicdn.com/t/font_1340918_lpsswvb7yv.js');
 
 const Main = () => {
-    const [activeKey, setActiveKey] = useState('home');
-    let homeDisplay = activeKey == "home";
+    let defaultActive = "home"
+    if (sessionStorage.getItem("activeKey") != "") {
+        defaultActive = sessionStorage.getItem("activeKey");
+    }
+    let [activeKey, setActiveKey] = useState(defaultActive);
     let listDisplay = activeKey == "list";
-    let userDisplay = activeKey == "user";
     return (
         <>
             <div>
-                <div style={{ display: homeDisplay ? 'block' : 'none' }}>
+                <div style={{ display: activeKey == "home" ? 'block' : 'none' }}>
                     <Home />
                 </div>
-                <div style={{ display: listDisplay ? 'block' : 'none' }}>
+                <div style={{ display: activeKey == "list" ? 'block' : 'none' }}>
                     <List refresh={listDisplay} />
                 </div>
-                <div style={{ display: userDisplay ? 'block' : 'none' }}>
+                <div style={{ display: activeKey == "user" ? 'block' : 'none' }}>
                     <User />
                 </div>
 
