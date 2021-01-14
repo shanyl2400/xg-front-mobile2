@@ -85,7 +85,7 @@ const List = (props) => {
                 more={<a href="#" onClick={() => refreshList()}>刷新</a>}
             >
                 {students != null && students.data != null && students.data.map((v) =>
-                    <Cell hasArrow onClick={() => { handleDetails(v) }} key={v.id} title={v.student_name} description={v.created_at.replaceAll("T", " ").replaceAll("Z", "")}>
+                    <Cell hasArrow onClick={() => { handleDetails(v) }} key={v.id} title={v.student_name} description={v.created_at.replace(/T/g, " ").replace(/Z/g, " ")}>
                     </Cell>
                 )}
                 <Button block size="xs" onClick={handleMore} style={{ marginBottom: 60, marginLeft: "auto", marginRight: "auto" }} >更多</Button>
