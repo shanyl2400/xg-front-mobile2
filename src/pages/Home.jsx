@@ -40,8 +40,13 @@ const Home = () => {
     useEffect(async () => {
         let res = await listOrderSourcesAPI();
         if (res.err_msg != "success") {
-            message("获取订单来源失败");
-            return;
+            if (res.err_msg.response.status != 401) {
+                message("获取订单来源失败:" + res.err_msg);
+                return;
+            } else {
+                console.log("获取订单来源失败:" + res)
+                return;
+            }
         }
         if (res.sources == null) {
             message("订单来源为空，请联系系统管理员");
@@ -135,10 +140,18 @@ const Home = () => {
         setOrderSourcePanelVisible(true);
     }
     const message = (content) => {
-        setPopupSettings({ visible: true, content: content });
-        setTimeout(() => {
-            setPopupSettings({ visible: false, content: "" });
-        }, 3000);
+        // setPopupSettings({ visible: true, content: content });
+        // setTimeout(() => {
+        //     setPopupSettings({ visible: false, content: "" });
+        // }, 3000);
+
+        Toast.show({
+            content: content,
+            stayTime: 3000,
+            afterClose: () => {
+                console.log('Toast已关闭');
+            }
+        })
     }
     const selectAddressRegion = selected => {
         if (selected == null) {
@@ -270,7 +283,7 @@ const Home = () => {
                 dataSource={options}
                 onOk={(selected) => {
                     console.log('Picker onOk: ', selected);
-                    Toast.show(JSON.stringify(selected));
+                    // Toast.show(JSON.stringify(selected));
                     selectAddressRegion(selected)
                     // setValue('cascade', selected.map(item => item.code));
                     setAddrPanelVisible(false);
@@ -282,7 +295,7 @@ const Home = () => {
                 visible={orderSourcePanelVisible}
                 dataSource={orderSourceList}
                 onOk={(selected) => {
-                    Toast.show(JSON.stringify(selected));
+                    // Toast.show(JSON.stringify(selected));
                     selectOrderSource(selected);
                     // setValue('single', selected.map(item => item.value));
                     setOrderSourcePanelVisible(false);

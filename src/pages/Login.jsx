@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input, Cell, Button, Popup } from 'zarm';
+import { Input, Cell, Button, Popup, Toast } from 'zarm';
 import axios from "axios"; //导入axios
 import logo from '../logo.png';
 import { useHistory } from "react-router-dom";
@@ -54,10 +54,19 @@ const Login = () => {
     }
 
     const toggle = (visible, content) => {
-        setPopupSettings({ visible: visible, content: content });
-        setTimeout(() => {
-            setPopupSettings({ visible: false, content: "" });
-        }, 3000);
+        // setPopupSettings({ visible: visible, content: content });
+        // setTimeout(() => {
+        //     setPopupSettings({ visible: false, content: "" });
+        // }, 3000);
+
+        Toast.show({
+            content: content,
+            stayTime: 3000,
+            afterClose: () => {
+                console.log('Toast已关闭');
+            }
+        })
+
     }
     return (
         <>
